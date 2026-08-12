@@ -338,35 +338,58 @@
   let topZ = 10;
 
   function makeDraggable(windowEl, titlebarEl) {
-    let offsetX = 0;
-    let offsetY = 0;
-    let isDragging = false;
+   let offsetX = 0;
+   let offsetY = 0;
+   let isDragging = false;
 
-    titlebarEl.addEventListener('mousedown', (e) => {
-      if (e.target.classList.contains('window-close')) return;
+  function startDrag(clientX, clientY, target) {
+    if (target.classList.contains('window-close')) return;
 
-      isDragging = true;
-      windowEl.style.zIndex = ++topZ;
+    isDragging = true;
+    windowEl.style.zIndex = ++topZ;
 
-      const rect = windowEl.getBoundingClientRect();
-      offsetX = e.clientX - rect.left;
-      offsetY = e.clientY - rect.top;
-      windowEl.style.left = rect.left + 'px';
-      windowEl.style.top = rect.top + 'px';
-      windowEl.style.transform = 'none';
-    });
-
-    document.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      windowEl.style.left = (e.clientX - offsetX) + 'px';
-      windowEl.style.top = (e.clientY - offsetY) + 'px';
-    });
-
-    document.addEventListener('mouseup', () => {
-      isDragging = false;
-    });
+    const rect = windowEl.getBoundingClientRect();
+    offsetX = clientX - rect.left;
+    offsetY = clientY - rect.top;
+    windowEl.style.left = rect.left + 'px';
+    windowEl.style.top = rect.top + 'px';
+    windowEl.style.transform = 'none';
   }
 
+  function moveDrag(clientX, clientY) {
+    if (!isDragging) return;
+    windowEl.style.left = (clientX - offsetX) + 'px';
+    windowEl.style.top = (clientY - offsetY) + 'px';
+  }
+
+  titlebarEl.addEventListener('mousedown', (e) => {
+    startDrag(e.clientX, e.clientY, e.target);
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    moveDrag(e.clientX, e.clientY);
+  });
+
+  document.addEventListener('mouseup', () => {
+    isDragging = false;
+  });
+
+  titlebarEl.addEventListener('touchstart', (e) => {
+    const touch = e.touches[0];
+    startDrag(touch.clientX, touch.clientY, e.target);
+  });
+
+  document.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    moveDrag(touch.clientX, touch.clientY);
+  }, { passive: false }); 
+
+  document.addEventListener('touchend', () => {
+    isDragging = false;
+  });
+}
   const homeWindow = document.getElementById('home-window');
   const homeTitlebar = document.getElementById('home-titlebar');
   makeDraggable(homeWindow, homeTitlebar);
