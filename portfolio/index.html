@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hello, I'm Julianni!</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    background: #dceefa;
+    position: relative;
+  }
+
+  .cloud {
+    position: absolute;
+    background: #fff;
+    border-radius: 50px;
+    opacity: 0.95;
+    filter: drop-shadow(0 6px 6px rgba(0,0,0,0.08));
+  }
+  .cloud::before, .cloud::after {
+    content: "";
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+  }
+
+  .cloud-1 {
+    width: 150px; height: 56px; top: 10%; left: -200px;
+    animation: drift-right 38s linear infinite;
+  }
+  .cloud-1::before { width: 82px; height: 82px; top: -36px; left: 16px; }
+  .cloud-1::after  { width: 66px; height: 66px; top: -26px; left: 74px; }
+
+  .cloud-2 {
+    width: 100px; height: 40px; top: 22%; left: -160px;
+    animation: drift-right 52s linear infinite;
+    animation-delay: -15s;
+  }
+  .cloud-2::before { width: 56px; height: 56px; top: -24px; left: 12px; }
+  .cloud-2::after  { width: 44px; height: 44px; top: -16px; left: 50px; }
+
+  .cloud-3 {
+    width: 80px; height: 32px; top: 40%; left: -140px;
+    animation: drift-right 44s linear infinite;
+    animation-delay: -28s;
+  }
+  .cloud-3::before { width: 44px; height: 44px; top: -18px; left: 10px; }
+  .cloud-3::after  { width: 34px; height: 34px; top: -12px; left: 40px; }
+
+  @keyframes drift-right {
+    from { transform: translateX(0); }
+    to   { transform: translateX(calc(100vw + 260px)); }
+  }
+
+  .window {
+    position: absolute;
+    top: 190px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    max-width: 90vw;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .window-titlebar {
+    background: #2f2f2f;
+    color: #fff;
+    padding: 14px 20px;
+    font-size: 15px;
+    cursor: grab;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .window-titlebar:active { cursor: grabbing; }
+
+  .window-close {
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .window-close:hover {
+    background: rgba(255,255,255,0.15);
+  }
+
+  .section-window .window-body {
+    text-align: left;
+    padding: 30px 34px;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+  .section-window .window-body p {
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  .section-window .window-body a {
+    color: #3d9fc9;
+    text-decoration: none;
+  }
+  .section-window .window-body a:hover {
+    text-decoration: underline;
+  }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 6px;
+  }
+  .work-grid img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+  }
+
+  .section-label {
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    font-size: 14px;
+    color: #333;
+    margin: 24px 0 14px;
+  }
+
+  .section-divider {
+    border: none;
+    border-top: 1px solid #e5e5e5;
+    margin: 22px 0;
+  }
+
+  .project-card {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+  .project-card img {
+    width: 150px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    flex-shrink: 0;
+  }
+  .project-card .project-text h3 {
+    color: #3d9fc9;
+    font-size: 17px;
+    margin-bottom: 6px;
+  }
+  .project-card .project-text p {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.5;
+    margin-bottom: 0;
+  }
+
+  .about-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 4px;
+  }
+  .about-header img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #eee;
+    flex-shrink: 0;
+  }
+  .about-header h2 {
+    color: #3d9fc9;
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .about-header .about-subtitle {
+    color: #666;
+    font-size: 14px;
+    margin-top: 4px;
+  }
+
+  .section-window .window-body ul {
+    margin: 6px 0 0 20px;
+  }
+  .section-window .window-body ul li {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.7;
+  }
+
+  .skills-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-top: 4px;
+  }
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .tag {
+    display: inline-block;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 13px;
+    color: #333;
+    background: #fafafa;
+    white-space: nowrap;
+  }
+
+  .window-body {
+    padding: 60px 40px;
+    text-align: center;
+  }
+
+  .window-body h1 {
+    font-size: 34px;
+    color: #222;
+    font-weight: 400;
+  }
+
+  .window-body h1 .name {
+    color: #6ec6ea;
+    font-weight: 600;
+  }
+
+  .window-body p.tagline {
+    margin-top: 8px;
+    color: #666;
+    font-size: 16px;
+  }
+
+  .icon-grid {
+    display: flex;
+    justify-content: center;
+    gap: 22px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+
+  .icon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: inherit;
+  }
+
+  .icon-box {
+    width: 46px;
+    height: 46px;
+    border: 2px solid #222;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+
+  .icon-item:hover .icon-box {
+    transform: translateY(-3px);
+    background: #f2f2f2;
+  }
+
+  .icon-item span.label {
+    font-size: 13px;
+    color: #333;
+  }
+
+  .icon-box svg {
+    width: 22px;
+    height: 22px;
+    stroke: #222;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+</style>
+</head>
+<body>
+
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  <div class="cloud cloud-3"></div>
+
+  <div class="window" id="home-window">
+    <div class="window-titlebar" id="home-titlebar">home</div>
+    <div class="window-body">
+      <h1>Hello, I'm <span class="name">Julianni</span></h1>
+      <p class="tagline">illustrator, painter, developer</p>
+
+      <div class="icon-grid">
+        <button class="icon-item" onclick="openSection('about')">
+          <span class="icon-box"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="7.5" r="0.5" fill="#222"/></svg></span>
+          <span class="label">about</span>
+        </button>
+
+        <button class="icon-item" onclick="openSection('links')">
+          <span class="icon-box"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/></svg></span>
+          <span class="label">links</span>
+        </button>
+
+        <button class="icon-item" onclick="openSection('work')">
+          <span class="icon-box"><svg viewBox="0 0 24 24"><path d="M3 7h6l2 2h10v10H3z"/></svg></span>
+          <span class="label">work</span>
+        </button>
+
+        <button class="icon-item" onclick="openSection('contact')">
+          <span class="icon-box"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 6l9 7 9-7"/></svg></span>
+          <span class="label">contact</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  let topZ = 10;
+
+  function makeDraggable(windowEl, titlebarEl) {
+    let offsetX = 0;
+    let offsetY = 0;
+    let isDragging = false;
+
+    titlebarEl.addEventListener('mousedown', (e) => {
+      if (e.target.classList.contains('window-close')) return;
+
+      isDragging = true;
+      windowEl.style.zIndex = ++topZ;
+
+      const rect = windowEl.getBoundingClientRect();
+      offsetX = e.clientX - rect.left;
+      offsetY = e.clientY - rect.top;
+      windowEl.style.left = rect.left + 'px';
+      windowEl.style.top = rect.top + 'px';
+      windowEl.style.transform = 'none';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      windowEl.style.left = (e.clientX - offsetX) + 'px';
+      windowEl.style.top = (e.clientY - offsetY) + 'px';
+    });
+
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+  }
+
+  const homeWindow = document.getElementById('home-window');
+  const homeTitlebar = document.getElementById('home-titlebar');
+  makeDraggable(homeWindow, homeTitlebar);
+  homeWindow.style.zIndex = topZ;
+
+  const sections = {
+    about: {
+      title: 'about',
+      width: '460px',
+      html: `<div class="about-header">
+               <img src="images/profile.png" alt="Julianni" />
+               <div>
+                 <h2>Julianni</h2>
+                 <div class="about-subtitle">illustrator, painter, developer</div>
+               </div>
+             </div>
+
+             <hr class="section-divider" />
+
+             <p>Hello, I'm Julianni! I like to draw, paint, and I'm on the journey to becoming a frontend developer.</p>
+
+             <div class="section-label">Education</div>
+             <p>Incoming junior at University of the Philippines Cebu, studying Computer Science.</p>
+
+             <div class="section-label">Other Interests</div>
+             <ul>
+               <li>Hiking</li>
+               <li>Playing guitar</li>
+               <li>Front-end development</li>
+             </ul>
+
+             <div class="section-label">Language Proficiency</div>
+             <p>English, Bisaya, Tagalog with great interest to learn Japanese, Korean, and more!</p>`
+    },
+    links: {
+      title: 'links',
+      html: `to be updated;>`
+    },
+    work: {
+      title: 'work',
+      width: '560px',
+      html: `
+             <div class="skills-columns">
+               <div>
+                 <strong>Tools</strong>
+                 <div class="tag-list">
+                   <span class="tag">Figma</span>
+                   <span class="tag">Adobe Fresco</span>
+                   <span class="tag">Canva</span>
+                   <span class="tag">Ibispaint</span>
+                 </div>
+               </div>
+               <div>
+                 <strong>Development</strong>
+                 <div class="tag-list">
+                   <span class="tag">HTML/CSS</span>
+                   <span class="tag">JavaScript</span>
+                   <span class="tag">React</span>
+                   <span class="tag">Python</span>
+                   <span class="tag">Git/GitHub</span>
+                 </div>
+               </div>
+             </div>
+
+             <hr class="section-divider" />
+             <div class="section-label">Art</div>
+
+             <div class="project-card">
+               <img src="images/painting.PNG" alt="Painting" />
+               <div class="project-text">
+                 <h3>Painting</h3>
+                 <p>Art's always been part of my life from drawing, painting, murals, and more!
+                    On hold for school right now, but coming back at it soon.</p>
+               </div>
+             </div>
+
+             <hr class="section-divider" />
+             <div class="section-label">Projects</div>
+
+             <div class="project-card">
+               <img src="images/Game dev.png" alt="Game dev project" />
+               <div class="project-text">
+                 <h3>Game Dev Project</h3>
+                 <p>Led art direction for our team's first game at DOST's NEXT LEVEL:
+                    Esports Game Dev Challenge.</p>
+               </div>
+             </div>
+
+             <div class="project-card">
+               <img src="images/hackathon.PNG" alt="Hackathon project" />
+               <div class="project-text">
+                 <h3>Hackathon Project</h3>
+                 <p>Selected as the only team from our block to compete which was a great 
+                    hands-on intro into development for my team and I!</p>
+               </div>
+             </div>
+
+             <div class="project-card">
+               <img src="images/veraversity.PNG" alt="Veraversity project" />
+               <div class="project-text">
+                 <h3>Veraversity</h3>
+                 <p>Built a prototype website during my first
+                    internship which is an experience that truly solidified my enthusiasm for development!</p>
+               </div>
+             </div>`
+    },
+    contact: {
+      title: 'contact',
+      html: `<p>Email: <a href="mailto:juliannijade@gmail.com">juliannijade@gmail.com</a></p>
+             <p>Drop a message and I'll get back to you as soon as I can!</p>`
+    }
+  };
+
+  function openSection(name) {
+    const existing = document.getElementById('window-' + name);
+
+    if (existing) {
+      existing.style.zIndex = ++topZ;
+      return;
+    }
+
+    const data = sections[name];
+
+    const win = document.createElement('div');
+    win.className = 'window section-window';
+    win.id = 'window-' + name;
+    win.style.width = data.width || '420px';
+    win.style.top = (160 + Math.random() * 60) + 'px';
+    const winWidth = parseInt(data.width) || 420;
+    win.style.left = (window.innerWidth / 2 - winWidth / 2 + (Math.random() * 80 - 40)) + 'px';
+    win.style.transform = 'none';
+    win.style.zIndex = ++topZ;
+
+    win.innerHTML = `
+      <div class="window-titlebar">
+        <span>${data.title}</span>
+        <span class="window-close">✕</span>
+      </div>
+      <div class="window-body">${data.html}</div>
+    `;
+
+    document.body.appendChild(win);
+
+    const titlebar = win.querySelector('.window-titlebar');
+    const closeBtn = win.querySelector('.window-close');
+
+    makeDraggable(win, titlebar);
+    closeBtn.addEventListener('click', () => win.remove());
+  }
+</script>
+
+</body>
+</html>
