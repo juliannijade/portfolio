@@ -495,8 +495,11 @@
     win.id = 'window-' + name;
     win.style.width = data.width || '420px';
     win.style.top = (160 + Math.random() * 60) + 'px';
-    const winWidth = parseInt(data.width) || 420;
-    win.style.left = (window.innerWidth / 2 - winWidth / 2 + (Math.random() * 80 - 40)) + 'px';
+    const configuredWidth = parseInt(data.width) || 420;
+    const winWidth = Math.min(configuredWidth, window.innerWidth * 0.9);
+    let leftPos = window.innerWidth / 2 - winWidth / 2 + (Math.random() * 80 - 40);
+    leftPos = Math.max(10, Math.min(leftPos, window.innerWidth - winWidth - 10));
+    win.style.left = leftPos + 'px';
     win.style.transform = 'none';
     win.style.zIndex = ++topZ;
 
